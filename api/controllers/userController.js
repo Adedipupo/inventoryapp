@@ -25,7 +25,7 @@ export const registerUser = asyncHandler(async(req, res) =>{
     if(user){
         const { _id,name,email,password,photo,phone,bio} = user;
         res.status(201).json({
-            _id,name,email,password,photo,phone,bio
+            _id,name,email,photo,phone,bio
         })
     }else{
         res.status(400);
