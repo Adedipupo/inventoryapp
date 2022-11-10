@@ -3,6 +3,7 @@ import asyncHandler from 'express-async-handler'
 import { UserModel } from '../models/userModel.js'
 import { generateToken } from '../utils/generateToken.js'
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 export const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body
@@ -91,6 +92,19 @@ export const loginUser = asyncHandler(async (req, res) => {
     throw new Error('Invalid user data')
   }
 })
+
+export const loginStatus = asyncHandler(async (req, res) => {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.json(false);
+  }
+  // Verify Token
+  const verified = jwt.verify(token, process.env.JWT_SECRET);
+  if (verified) {
+    return res.json(true);
+  }
+  return res.json(false);
+});
 
 export const logoutUser = asyncHandler(async (req, res) => {
   res.cookie('token', '', {
