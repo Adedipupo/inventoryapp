@@ -107,6 +107,12 @@ export const logoutUser = asyncHandler(async (req, res) => {
 
 export const getUser = asyncHandler(async (req, res) => {
   const user = await UserModel.findById(req.user._id)
+
+  if(!user) {
+    res.status(404)
+    throw new Error('User not found')
+  }
+
   if (user) {
     const { _id, name, email, photo, phone, bio } = user
     res.status(200).json({
@@ -122,3 +128,35 @@ export const getUser = asyncHandler(async (req, res) => {
     throw new Error('User not found')
   }
 });
+
+export const updateUser = asyncHandler(async (req, res) => {
+  const user = await UserModel.findById(req.user._id)
+
+  if(!user) {
+    res.status(404)
+    throw new Error('User not found')
+  }
+
+  if (user) {
+    user.name = req.body.name || user.name
+    user.email = req.body.email || user.email
+    user.photo = req.body.photo || user.photo
+    user.phone = req.body.phone || user.phone
+    user.bio = req.body.bio || user.bio
+
+    const updatedUser = await user.save()
+
+    const { _id, name, email, photo, phone, bio } = updatedUser
+    res.status(200).json({
+      _id,
+      name,
+      email,
+      photo,
+      phone,
+      bio,
+    })
+  } else {
+    res.status(404)
+    throw new Error('User not found')
+  }
+})
