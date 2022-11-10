@@ -80,11 +80,14 @@ export const loginUser = asyncHandler(async (req, res) => {
 
   // if (user && await user.matchPassword(password)) {
   if (user && passwordCorrect) {
-      const { _id, name, email} = user
+      const { _id, name, email, photo, phone, bio} = user
       res.status(201).json({
           _id,
           name,
           email,
+          photo,
+          phone,
+          bio,
           token
         })
   } else {
