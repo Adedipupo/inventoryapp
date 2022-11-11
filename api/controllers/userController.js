@@ -91,7 +91,7 @@ export const loginUser = asyncHandler(async (req, res) => {
         })
   } else {
     res.status(400)
-    throw new Error('Invalid user data')
+    throw new Error('Invalid login details')
   }
 })
 
@@ -186,13 +186,19 @@ export const changePassword = asyncHandler(async (req, res)=>{
   }
 
   if (user) {
-    const passwordCorrect = await bcrypt.compare(req.body.oldPassword,user.password)
+    const {oldPassword, password} = req.body;
+
+    if(!oldPassword || !password) {
+      res.status(400)
+      throw new Error('Please provide all fields')
+    }
+
+    const passwordCorrect = await bcrypt.compare(oldPassword,user.password)
     if(passwordCorrect){
-      user.password = req.body.newPassword
-      const updatedUser = await user.save()
+      user.password = req.body.password
+      await user.save()
       res.status(200).json({
-        message: 'Password Changed Successfully',
-        data: updatedUser
+        message: 'Password Changed Successfully'
       })
     } else {
       res.status(400)
