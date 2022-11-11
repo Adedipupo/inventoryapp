@@ -176,3 +176,30 @@ export const updateUser = asyncHandler(async (req, res) => {
     throw new Error('User not found')
   }
 })
+
+export const changePassword = asyncHandler(async (req, res)=>{
+  const user = await UserModel.findById(req.user._id)
+
+  if(!user) {
+    res.status(404)
+    throw new Error('User not found')
+  }
+
+  if (user) {
+    const passwordCorrect = await bcrypt.compare(req.body.oldPassword,user.password)
+    if(passwordCorrect){
+      user.password = req.body.newPassword
+      const updatedUser = await user.save()
+      res.status(200).json({
+        message: 'Password Changed Successfully',
+        data: updatedUser
+      })
+    } else {
+      res.status(400)
+      throw new Error('Old Password is incorrect')
+    }
+  } else {
+    res.status(404)
+    throw new Error('User not found')
+  }
+})
