@@ -1,4 +1,3 @@
-import express from 'express'
 import asyncHandler from 'express-async-handler'
 import { UserModel } from '../models/userModel.js'
 import { generateToken } from '../utils/generateToken.js'
@@ -155,8 +154,8 @@ export const updateUser = asyncHandler(async (req, res) => {
   }
 
   if (user) {
+    user.email =  email
     user.name = req.body.name || user.name
-    user.email = req.body.email || user.email
     user.photo = req.body.photo || user.photo
     user.phone = req.body.phone || user.phone
     user.bio = req.body.bio || user.bio
