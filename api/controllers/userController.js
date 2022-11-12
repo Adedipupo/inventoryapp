@@ -1,8 +1,9 @@
 import asyncHandler from 'express-async-handler'
 import { UserModel } from '../models/userModel.js'
 import { generateToken } from '../utils/generateToken.js'
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
+import crypto from 'crypto'
 
 export const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body
@@ -24,7 +25,7 @@ export const registerUser = asyncHandler(async (req, res) => {
     password,
   })
 
-  const token = generateToken(user._id);
+  const token = generateToken(user._id)
 
   res.cookie('token', token, {
     path: '/',
@@ -32,24 +33,24 @@ export const registerUser = asyncHandler(async (req, res) => {
     expires: new Date(Date.now() + 1000 * 86400),
     // sameSite: "none",
     // secure: true,
-  });
+  })
 
   if (user) {
-      const { _id, name, email, photo, phone, bio } = user
-      res.status(201).json({
-          _id,
-          name,
-          email,
-          photo,
-          phone,
-          bio,
-          token
-        })
+    const { _id, name, email, photo, phone, bio } = user
+    res.status(201).json({
+      _id,
+      name,
+      email,
+      photo,
+      phone,
+      bio,
+      token,
+    })
   } else {
     res.status(400)
     throw new Error('Invalid user data')
   }
-});
+})
 
 export const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body
@@ -65,7 +66,7 @@ export const loginUser = asyncHandler(async (req, res) => {
     throw new Error('User does not exists')
   }
 
-  const token = generateToken(user._id);
+  const token = generateToken(user._id)
 
   res.cookie('token', token, {
     path: '/',
@@ -73,22 +74,22 @@ export const loginUser = asyncHandler(async (req, res) => {
     expires: new Date(Date.now() + 1000 * 86400),
     // sameSite: "none",
     // secure: true,
-  });
+  })
 
-  const passwordCorrect = await bcrypt.compare(password,user.password)
+  const passwordCorrect = await bcrypt.compare(password, user.password)
 
   // if (user && await user.matchPassword(password)) {
   if (user && passwordCorrect) {
-      const { _id, name, email, photo, phone, bio} = user
-      res.status(201).json({
-          _id,
-          name,
-          email,
-          photo,
-          phone,
-          bio,
-          token
-        })
+    const { _id, name, email, photo, phone, bio } = user
+    res.status(201).json({
+      _id,
+      name,
+      email,
+      photo,
+      phone,
+      bio,
+      token,
+    })
   } else {
     res.status(400)
     throw new Error('Invalid login details')
@@ -96,17 +97,17 @@ export const loginUser = asyncHandler(async (req, res) => {
 })
 
 export const loginStatus = asyncHandler(async (req, res) => {
-  const token = req.cookies.token;
+  const token = req.cookies.token
   if (!token) {
-    return res.json(false);
+    return res.json(false)
   }
   // Verify Token
-  const verified = jwt.verify(token, process.env.JWT_SECRET);
+  const verified = jwt.verify(token, process.env.JWT_SECRET)
   if (verified) {
-    return res.json(true);
+    return res.json(true)
   }
-  return res.json(false);
-});
+  return res.json(false)
+})
 
 export const logoutUser = asyncHandler(async (req, res) => {
   res.cookie('token', '', {
@@ -115,16 +116,16 @@ export const logoutUser = asyncHandler(async (req, res) => {
     expires: new Date(Date.now() - 1000 * 86400),
     // sameSite: "none",
     // secure: true,
-  });
+  })
   res.status(200).json({
-    message: 'Logout Successful'
+    message: 'Logout Successful',
   })
 })
 
 export const getUser = asyncHandler(async (req, res) => {
   const user = await UserModel.findById(req.user._id)
 
-  if(!user) {
+  if (!user) {
     res.status(404)
     throw new Error('User not found')
   }
@@ -143,18 +144,18 @@ export const getUser = asyncHandler(async (req, res) => {
     res.status(404)
     throw new Error('User not found')
   }
-});
+})
 
 export const updateUser = asyncHandler(async (req, res) => {
   const user = await UserModel.findById(req.user._id)
 
-  if(!user) {
+  if (!user) {
     res.status(404)
     throw new Error('User not found')
   }
 
   if (user) {
-    user.email =  email
+    user.email = email
     user.name = req.body.name || user.name
     user.photo = req.body.photo || user.photo
     user.phone = req.body.phone || user.phone
@@ -177,28 +178,28 @@ export const updateUser = asyncHandler(async (req, res) => {
   }
 })
 
-export const changePassword = asyncHandler(async (req, res)=>{
+export const changePassword = asyncHandler(async (req, res) => {
   const user = await UserModel.findById(req.user._id)
 
-  if(!user) {
+  if (!user) {
     res.status(404)
     throw new Error('User not found')
   }
 
   if (user) {
-    const {oldPassword, password} = req.body;
+    const { oldPassword, password } = req.body
 
-    if(!oldPassword || !password) {
+    if (!oldPassword || !password) {
       res.status(400)
       throw new Error('Please provide all fields')
     }
 
-    const passwordCorrect = await bcrypt.compare(oldPassword,user.password)
-    if(passwordCorrect){
+    const passwordCorrect = await bcrypt.compare(oldPassword, user.password)
+    if (passwordCorrect) {
       user.password = req.body.password
       await user.save()
       res.status(200).json({
-        message: 'Password Changed Successfully'
+        message: 'Password Changed Successfully',
       })
     } else {
       res.status(400)
@@ -211,5 +212,20 @@ export const changePassword = asyncHandler(async (req, res)=>{
 })
 
 export const forgotPassword = asyncHandler(async (req, res) => {
-  
-})
+  const { email } = req.body
+
+  const user = await UserModel.findOne({ email })
+
+  if (!user) {
+    res.status(404)
+    throw new Error(' User does not exist')
+  }
+
+  let resetToken = crypto.randomBytes(32).toString('hex') + user._id
+  console.log('first', resetToken)
+  const hashedToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex')
+  console.log('hashed', hashedToken)
+});

@@ -7,6 +7,7 @@ import homeRoutes from './routes/index.js'
 import userRoutes from './routes/userRoute.js'
 import errorHandler from './middleware/errorMiddleware.js'
 import cookieParser from 'cookie-parser'
+import morgan from 'morgan'
 
 dotenv.config()
 
@@ -19,7 +20,10 @@ app.use(cookieParser())
 app.use(cors({
   origin: '*',
   credentials: true,
-}))
+}));
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan('dev'))
+}
 
 const PORT = process.env.PORT || 1234
 
