@@ -209,3 +209,7 @@ export const changePassword = asyncHandler(async (req, res)=>{
     throw new Error('User not found')
   }
 })
+
+export const forgotPassword = asyncHandler(async (req, res) => {
+  
+})
