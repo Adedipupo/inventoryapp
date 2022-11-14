@@ -4,6 +4,8 @@ import { generateToken } from '../utils/generateToken.js'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import crypto from 'crypto'
+import { TokenModel } from '../models/tokenModel.js'
+import { sendEmail } from '../utils/sendEmail.js';
 
 export const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body
@@ -222,10 +224,44 @@ export const forgotPassword = asyncHandler(async (req, res) => {
   }
 
   let resetToken = crypto.randomBytes(32).toString('hex') + user._id
-  console.log('first', resetToken)
   const hashedToken = crypto
     .createHash('sha256')
     .update(resetToken)
     .digest('hex')
-  console.log('hashed', hashedToken)
-});
+
+  await new TokenModel({
+    userId: user._id,
+    token: hashedToken,
+    createdAt: Date.now(),
+    expiresAt: Date.now() + 30 * (60 * 1000),
+  }).save()
+
+  const resetUrl = `${process.env.CLIENT_URL}/resetpassword/${resetToken}`
+
+  const message = `
+    <h2>Hello, ${user.name}</h2> 
+    <p>Please use the link below to reset your password</p>
+    <p>The reset password link is only valid for 30mins</p>
+
+    <a href=${resetUrl} clicktracking=off>${resetUrl}</a>
+
+
+    <p>Regards...</p>
+    <p>PinventApp team @2022 </p>
+  `;
+
+  const subject = "Password Resend Request";
+  const send_to = user.email;
+  const send_from = process.env.EMAIL_USER;
+
+  try {
+    await sendEmail(subject,message,send_to, send_from);
+    res.status(200).json({
+      success: true,
+      message: "Reset Email sent successfully "
+    });
+  } catch (error) {
+    res.status(500)
+    throw new Error('Email not sent,please try again')
+  }
+})
