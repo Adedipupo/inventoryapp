@@ -1,13 +1,13 @@
-import express, { urlencoded } from 'express'
-import dotenv from 'dotenv'
-import cors from 'cors'
-import mongoose from 'mongoose'
-import bodyParser from 'body-parser'
-import homeRoutes from './routes/index.js'
-import userRoutes from './routes/userRoute.js'
-import errorHandler from './middleware/errorMiddleware.js'
-import cookieParser from 'cookie-parser'
-import morgan from 'morgan'
+import express, { urlencoded } from 'express';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
+import productRoutes from './routes/productRoute.js';
+import userRoutes from './routes/userRoute.js';
+import errorHandler from './middleware/errorMiddleware.js';
+import cookieParser from 'cookie-parser';
+import morgan from 'morgan';
 
 dotenv.config()
 
@@ -31,6 +31,7 @@ app.get('/',(req, res)=>{
   res.send("api is live...")
 });
 app.use('/api/users',userRoutes);
+app.use('/api/products',productRoutes);
 app.use(errorHandler)
 
 
