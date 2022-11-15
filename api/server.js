@@ -8,6 +8,7 @@ import userRoutes from './routes/userRoute.js';
 import errorHandler from './middleware/errorMiddleware.js';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
+import path from 'path';
 
 dotenv.config()
 
@@ -24,6 +25,9 @@ app.use(cors({
 if (process.env.NODE_ENV === "development") {
   app.use(morgan('dev'))
 }
+
+const __dirname = path.resolve();
+app.use("/uploads",express.static(path.join(__dirname,"uploads")))
 
 const PORT = process.env.PORT || 1234
 
