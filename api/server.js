@@ -9,6 +9,8 @@ import errorHandler from './middleware/errorMiddleware.js';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import path from 'path';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 dotenv.config()
 
@@ -26,7 +28,8 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan('dev'))
 }
 
-const __dirname = path.resolve();
+// const __dirname = path.resolve();
+const __dirname = dirname(fileURLToPath(import.meta.url));
 app.use("/uploads",express.static(path.join(__dirname,"uploads")))
 
 const PORT = process.env.PORT || 1234
