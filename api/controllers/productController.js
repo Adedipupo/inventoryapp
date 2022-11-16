@@ -15,21 +15,28 @@ export const createProduct = asyncHandler(async (req, res) => {
   // Handle Image upload
   let fileData = {}
   if (req.file) {
-    // Save image to cloudinary
-    // let uploadedFile
-    // try {
-    //   uploadedFile = await Cloudinary.uploader.upload(req.file.path, {
-    //     folder: 'Pinvent App',
-    //     resource_type: 'image',
-    //   })
-    // } catch (error) {
-    //   res.status(500)
-    //   throw new Error('Image could not be uploaded')
-    // }
+   // Save image to cloudinary
+    let uploadedFile;
+    
+    Cloudinary.config({ 
+        cloud_name: process.env.CLOUD_NAME, 
+        api_key: process.env.API_KEY, 
+        api_secret: process.env.API_SECRET 
+      });
+    try {
+        uploadedFile = await Cloudinary.uploader.upload(req.file.path, {
+            folder: 'Inventory App',
+            resource_type: 'image',
+        })
+
+    } catch (error) {
+      res.status(500)
+      throw new Error('Image could not be uploaded')
+    }
 
     fileData = {
       fileName: req.file.originalname,
-      filePath: req.file.path,
+      filePath: uploadedFile.secure_url,
       fileType: req.file.mimetype,
       fileSize: fileSizeFormatter(req.file.size, 2),
     }
