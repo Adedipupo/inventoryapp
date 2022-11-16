@@ -48,4 +48,4 @@ const productSchema = new mongoose.Schema(
   },
 )
 
-export const ProductModel = mongoose.model('Product', productSchema)
+export const ProductModel = mongoose.model('Products', productSchema)

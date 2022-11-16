@@ -17,14 +17,14 @@ export const createProduct = asyncHandler(async (req, res) => {
   if (req.file) {
    // Save image to cloudinary
     let uploadedFile;
-    
+
     Cloudinary.config({ 
         cloud_name: process.env.CLOUD_NAME, 
         api_key: process.env.API_KEY, 
         api_secret: process.env.API_SECRET 
       });
     try {
-        uploadedFile = await Cloudinary.uploader.upload(req.file.path, {
+        uploadedFile = await Cloudinary.v2.uploader.upload(req.file.path, {
             folder: 'Inventory App',
             resource_type: 'image',
         })
@@ -42,7 +42,7 @@ export const createProduct = asyncHandler(async (req, res) => {
     }
   }
 
-  const product = await ProductModel({
+  const product = await ProductModel.create({
     user: req.user.id,
     name,
     sku,
@@ -57,4 +57,30 @@ export const createProduct = asyncHandler(async (req, res) => {
     msg: 'Product created successfully',
     data: product,
   })
+})
+
+export const getAllProduct = asyncHandler(async (req, res) => {
+    const products = await ProductModel.find({ user: req.user.id }).sort("-createdAt");
+    res.status(200).json({
+        msg: 'successful',
+        data: products,
+      })
+})
+
+export const getProduct = asyncHandler(async (req, res) => {
+    const product = await ProductModel.findById(req.params.id);
+    // if product doesnt exist
+    if (!product) {
+      res.status(404);
+      throw new Error("Product not found");
+    }
+    // Match product to its user
+    if (product.user.toString() !== req.user.id) {
+      res.status(401);
+      throw new Error("User not authorized");
+    }
+    res.status(200).json({
+        msg: 'successful',
+        data: product,
+      })
 })
