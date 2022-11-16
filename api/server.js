@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import productRoutes from './routes/productRoute.js';
 import userRoutes from './routes/userRoute.js';
+import contactRoutes from './routes/contactRoute.js';
 import errorHandler from './middleware/errorMiddleware.js';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
@@ -39,6 +40,7 @@ app.get('/',(req, res)=>{
 });
 app.use('/api/users',userRoutes);
 app.use('/api/products',productRoutes);
+app.use('/api/contact',contactRoutes);
 app.use(errorHandler)
 
 
