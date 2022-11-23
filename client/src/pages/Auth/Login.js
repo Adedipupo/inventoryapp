@@ -1,4 +1,6 @@
 import React from 'react'
+import "./auth.module.scss";
+
 
 const Login = () => {
   return (

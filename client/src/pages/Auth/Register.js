@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import "./auth.module.scss";
 
 const Register = () => {
   return (
