@@ -60,7 +60,7 @@ const Login = () => {
               Login
             </button>
           </form>
-          <Link to="/forgot">Forgot Password</Link>
+          <Link to="/forgotpassword">Forgot Password</Link>
 
           <span className={styles.register}>
             <Link to="/">Home</Link>
