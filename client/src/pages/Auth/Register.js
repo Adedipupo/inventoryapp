@@ -1,39 +1,66 @@
-import React, { useState } from "react";
-import styles from "./auth.module.scss";
-import { TiUserAddOutline } from "react-icons/ti";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import Loader from "../../components/Loader/Loader";
-import Card from "../../components/Card/Card";
+import React, { useState } from 'react'
+import styles from './auth.module.scss'
+import { TiUserAddOutline } from 'react-icons/ti'
+import { useDispatch } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+import Loader from '../../components/Loader/Loader'
+import Card from '../../components/Card/Card'
+import { toast } from 'react-toastify'
+import { registerUser, validateEmail } from '../../services/authService'
+import { SET_LOGIN, SET_NAME } from '../../redux/features/auth/authSlice'
 
 const initialState = {
-  name: "",
-  email: "",
-  password: "",
-  password2: "",
-};
+  name: '',
+  email: '',
+  password: '',
+  password2: '',
+}
 
 const Register = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
-  const [formData, setformData] = useState(initialState);
-  const { name, email, password, password2 } = formData;
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(false)
+  const [formData, setformData] = useState(initialState)
+  const { name, email, password, password2 } = formData
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setformData({ ...formData, [name]: value });
-  };
+    const { name, value } = e.target
+    setformData({ ...formData, [name]: value })
+  }
 
   const register = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-  
-  };
+    if (!name || !email || !password) {
+      return toast.error('All fields are required!')
+    }
+
+    if (password !== password2) {
+      return toast.error('Passwords do not match!')
+    }
+
+    if (!validateEmail(email)) {
+      return toast.error('Please enter a valid email address!')
+    }
+
+    const userData = { name, email, password }
+    setIsLoading(true)
+    try {
+      const data = await registerUser(userData); 
+      // console.log("data",data)
+      await dispatch(SET_LOGIN(true))
+      await dispatch(SET_NAME(data.name))
+      navigate("/dashboard")
+      setIsLoading(false)
+    } catch (error) {
+      setIsLoading(false)
+      console.log(error);
+    }
+  }
 
   return (
     <div className={`container ${styles.auth}`}>
-      {isLoading && <Loader />}
+      {isLoading && <h2>loading...</h2>}
       <Card>
         <div className={styles.form}>
           <div className="--flex-center">
@@ -87,7 +114,7 @@ const Register = () => {
         </div>
       </Card>
     </div>
-  );
-};
+  )
+}
 
-export default Register;
+export default Register
