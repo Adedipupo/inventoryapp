@@ -60,7 +60,7 @@ const Register = () => {
 
   return (
     <div className={`container ${styles.auth}`}>
-      {isLoading && <h2>loading...</h2>}
+      {isLoading && <Loader />}
       <Card>
         <div className={styles.form}>
           <div className="--flex-center">
