@@ -3,6 +3,8 @@ import { AiOutlineMail } from "react-icons/ai";
 import Card from "../../components/Card/Card";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { forgotPassword, validateEmail } from "../../services/authService";
+import { toast } from "react-toastify";
 
 
 
@@ -11,6 +13,19 @@ const ForgotPassword = () => {
 
   const forgot = async (e) => {
     e.preventDefault();
+
+    if (!email) {
+      return toast.error('Please add your email address!')
+    }
+
+    if (!validateEmail(email)) {
+      return toast.error('Please enter a valid email address!')
+    }
+
+    const userData = { email }
+     
+    await forgotPassword(userData)
+    setEmail("")
   };
 
   return (
