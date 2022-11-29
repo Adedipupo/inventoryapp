@@ -38,4 +38,18 @@ export const loginUser = async (userData) => {
     toast.error(message)
   }
 }
+export const logoutUser = async (userData) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/api/users/logout`, {
+        withCredentials: true 
+    })
+    if(response.statusText === "OK") {
+        toast.error("Logged out successfully!")
+    }
+    return response.data;
+  } catch (error) {
+    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    toast.error(message)
+  }
+}
 
