@@ -4,7 +4,7 @@ import { MdPassword } from "react-icons/md";
 import { Link, useParams } from "react-router-dom";
 import Card from '../../components/Card/Card';
 import { toast } from "react-toastify";
-import { resettPassword } from "../../services/authService";
+import { resetPassword } from "../../services/authService";
 
 const initialState = {
   password: "",
@@ -38,7 +38,7 @@ const ResetPassword = () => {
     }
 
     try {
-      const data = await resettPassword(userData, resetToken);
+      const data = await resetPassword(userData, resetToken);
       toast.success(data.message);
     } catch (error) {
       console.log(error.message);

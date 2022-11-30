@@ -58,7 +58,7 @@ export const forgotPassword = async (userData) => {
       toast.error(message)
     }
   }
-export const resettPassword = async (userData,resetToken) => {
+export const resetPassword = async (userData,resetToken) => {
     try {
       const response = await axios.put(`${BASE_URL}/api/users/resetpassword/${resetToken}`, userData)
       return response.data
@@ -67,7 +67,7 @@ export const resettPassword = async (userData,resetToken) => {
       toast.error(message)
     }
   }
-export const getUserStatus = async () => {
+export const userStatus = async () => {
     try {
         const response = await axios.put(`${BASE_URL}/api/users/status`)
         return response.data

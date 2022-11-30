@@ -10,10 +10,23 @@ import Home from './pages/Home/Home'
 import axios from 'axios'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import { userStatus } from './services/authService'
+import { SET_LOGIN } from './redux/features/auth/authSlice'
 
 axios.defaults.withCredentials = true
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    async function loginStatus(){
+      const status = await userStatus()
+      dispatch(SET_LOGIN(status))
+    }
+    loginStatus()
+  }, [dispatch])
   return (
     <>
       <Routes>
