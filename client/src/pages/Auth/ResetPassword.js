@@ -3,6 +3,8 @@ import styles from "./auth.module.scss";
 import { MdPassword } from "react-icons/md";
 import { Link, useParams } from "react-router-dom";
 import Card from '../../components/Card/Card';
+import { toast } from "react-toastify";
+import { resettPassword } from "../../services/authService";
 
 const initialState = {
   password: "",
@@ -22,6 +24,26 @@ const ResetPassword = () => {
 
   const reset = async (e) => {
     e.preventDefault();
+
+    if (!password) {
+      return toast.error('Password fields are required!')
+    }
+
+    if (password !== password2) {
+      return toast.error('Passwords do not match!')
+    }
+
+    const userData = { 
+      password, password2 
+    }
+
+    try {
+      const data = await resettPassword(userData, resetToken);
+      toast.success(data.message);
+    } catch (error) {
+      console.log(error.message);
+    }
+  
   };
 
   return (
