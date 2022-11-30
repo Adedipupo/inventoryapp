@@ -3,7 +3,7 @@ import './Home.scss'
 import { RiProductHuntLine } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
 import heroImg from '../../assests/inv-img.png'
-
+import { ShowOnLogin, ShowOnLogout } from '../../components/Protect/HiddenLinks'
 
 export default function Home() {
   return (
@@ -13,25 +13,31 @@ export default function Home() {
           <RiProductHuntLine size={35} />
         </div>
         <ul className="home-links">
-          <li>
-            <Link to="/register">Register</Link>
-          </li>
-          <li>
-            <button className="--btn --btn-primary">
-              <Link to="/login">Login</Link>
-            </button>
-          </li>
-          <li>
-            <button className="--btn --btn-primary">
-              <Link to="/dashboard">Dashboard</Link>
-            </button>
-          </li>
+          <ShowOnLogout>
+            <li>
+              <Link to="/register">Register</Link>
+            </li>
+          </ShowOnLogout>
+          <ShowOnLogout>
+            <li>
+              <button className="--btn --btn-primary">
+                <Link to="/login">Login</Link>
+              </button>
+            </li>
+          </ShowOnLogout>
+          <ShowOnLogin>
+            <li>
+              <button className="--btn --btn-primary">
+                <Link to="/dashboard">Dashboard</Link>
+              </button>
+            </li>
+          </ShowOnLogin>
         </ul>
       </nav>
 
       <section className="container hero">
         <div className="hero-text">
-          <h2>Inventory {"&"} Stock Management Solution</h2>
+          <h2>Inventory {'&'} Stock Management Solution</h2>
           <p>
             Inventory system to control and manage proucts in the warehouse in
             real timeand integrated to make it easier to develop your business.
@@ -57,10 +63,10 @@ export default function Home() {
 }
 
 const NumberText = ({ num, text }) => {
-    return (
-      <div className="--mr">
-        <h3 className="--color-white">{num}</h3>
-        <p className="--color-white">{text}</p>
-      </div>
-    );
-  };
+  return (
+    <div className="--mr">
+      <h3 className="--color-white">{num}</h3>
+      <p className="--color-white">{text}</p>
+    </div>
+  )
+}
