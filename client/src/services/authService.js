@@ -69,7 +69,7 @@ export const resetPassword = async (userData,resetToken) => {
   }
 export const userStatus = async () => {
     try {
-        const response = await axios.put(`${BASE_URL}/api/users/status`)
+        const response = await axios.get(`${BASE_URL}/api/users/status`)
         return response.data
       } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
