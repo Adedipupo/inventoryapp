@@ -28,8 +28,8 @@ export const createProduct = createAsyncThunk(
   },
 )
 export const getProducts = createAsyncThunk(
-  'product/all',
-  async (thunkAPI) => {
+  'product/getAll',
+  async (_,thunkAPI) => {
     try {
       return await productService.getProducts()
     } catch (error) {

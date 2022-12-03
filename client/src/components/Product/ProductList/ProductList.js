@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { SpinnerImg } from "../../loader/Loader";
 import "./productList.scss";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { AiOutlineEye } from "react-icons/ai";
-import Search from "../../search/Search";
 import { useDispatch, useSelector } from "react-redux";
 
 import ReactPaginate from "react-paginate";
@@ -11,6 +9,7 @@ import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { Link } from "react-router-dom";
 import { getProducts } from "../../../redux/features/product/productSlice";
+import { SpinnerImg } from "../../Loader/Loader";
 
 const ProductList = ({ products, isLoading }) => {
   const [search, setSearch] = useState("");
@@ -81,10 +80,10 @@ const ProductList = ({ products, isLoading }) => {
             <h3>Inventory Items</h3>
           </span>
           <span>
-            <Search
+            {/* <Search
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-            />
+            /> */}
           </span>
         </div>
 
