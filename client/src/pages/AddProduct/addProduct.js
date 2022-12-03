@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ProductForm from "../../components/ProductForm/ProductForm";
-import { createProduct } from '../../../../api/controllers/productController';
-import { selectIsLoading } from "../../redux/features/product/productSlice";
+import { createProduct, selectIsLoading } from "../../redux/features/product/productSlice";
 import Loader from "../../components/Loader/Loader";
 
 const initialState = {

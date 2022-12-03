@@ -10,7 +10,7 @@ const initialState = {
   message: '',
 }
 
-const createProduct = createAsyncThunk(
+export const createProduct = createAsyncThunk(
   'product/create',
   async (formData, thunkAPI) => {
     try {
