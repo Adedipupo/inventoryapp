@@ -29,7 +29,7 @@ const Dashboard = () => {
   return (
     <div>
       <ProductSummary products={products} />
-      <ProductList products={products} isLoading={isLoading} />
+      <ProductList products={products.data} isLoading={isLoading} />
     </div>
   )
 }

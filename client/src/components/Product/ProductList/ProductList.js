@@ -107,7 +107,7 @@ const ProductList = ({ products, isLoading }) => {
               </thead>
 
               <tbody>
-                {currentItems.map((product, index) => {
+                {products.map((product, index) => {
                   const { _id, name, category, price, quantity } = product;
                   return (
                     <tr key={_id}>
