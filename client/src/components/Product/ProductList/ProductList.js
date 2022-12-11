@@ -10,6 +10,7 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import { Link } from "react-router-dom";
 import { getProducts } from "../../../redux/features/product/productSlice";
 import { SpinnerImg } from "../../Loader/Loader";
+import Search from "../../Search/Search";
 
 const ProductList = ({ products, isLoading }) => {
   const [search, setSearch] = useState("");
@@ -79,11 +80,11 @@ console.log("products", products);
           <span>
             <h3>Inventory Items</h3>
           </span>
-          <span><h3>Search</h3>
-            {/* <Search
+          <span>
+            <Search
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-            /> */}
+            />
           </span>
         </div>
 
