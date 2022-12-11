@@ -25,11 +25,10 @@ const Dashboard = () => {
     }
   }, [isLoggedIn, isError, message, dispatch]);
 
-  console.log("products",products);
   return (
     <div>
       <ProductSummary products={products} />
-      <ProductList products={products.data} isLoading={isLoading} />
+      <ProductList products={products} isLoading={isLoading} />
     </div>
   )
 }

@@ -61,10 +61,7 @@ export const getAllProduct = asyncHandler(async (req, res) => {
   const products = await ProductModel.find({ user: req.user.id }).sort(
     '-createdAt',
   )
-  res.status(200).json({
-    msg: 'successful',
-    data: products,
-  })
+  res.status(200).json(products)
 })
 
 export const getProduct = asyncHandler(async (req, res) => {
@@ -79,10 +76,7 @@ export const getProduct = asyncHandler(async (req, res) => {
     res.status(401)
     throw new Error('User not authorized')
   }
-  res.status(200).json({
-    msg: 'successful',
-    data: product,
-  })
+  res.status(200).json(product)
 })
 
 export const deleteProduct = asyncHandler(async (req, res) => {
@@ -162,8 +156,5 @@ export const updateProduct = asyncHandler(async (req, res) => {
     },
   )
 
-  res.status(201).json({
-    msg: 'Product updated successfully',
-    data: updatedProduct,
-  })
+  res.status(201).json(updatedProduct)
 })

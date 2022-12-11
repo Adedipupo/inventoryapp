@@ -70,7 +70,7 @@ const ProductList = ({ products, isLoading }) => {
 //   useEffect(() => {
 //     dispatch(FILTER_PRODUCTS({ products, search }));
 //   }, [products, search, dispatch]);
-
+console.log("products", products);
   return (
     <div className="product-list">
       <hr />
@@ -79,7 +79,7 @@ const ProductList = ({ products, isLoading }) => {
           <span>
             <h3>Inventory Items</h3>
           </span>
-          <span>
+          <span><h3>Search</h3>
             {/* <Search
               value={search}
               onChange={(e) => setSearch(e.target.value)}
