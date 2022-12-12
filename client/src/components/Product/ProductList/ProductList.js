@@ -11,10 +11,11 @@ import { Link } from "react-router-dom";
 import { getProducts } from "../../../redux/features/product/productSlice";
 import { SpinnerImg } from "../../Loader/Loader";
 import Search from "../../Search/Search";
+import { FILTER_PRODUCTS, selectFilteredProducts } from "../../../redux/features/product/filterSlice";
 
 const ProductList = ({ products, isLoading }) => {
   const [search, setSearch] = useState("");
-//   const filteredProducts = useSelector(selectFilteredPoducts);
+  const filteredProducts = useSelector(selectFilteredProducts);
 
   const dispatch = useDispatch();
 
@@ -53,25 +54,25 @@ const ProductList = ({ products, isLoading }) => {
   const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
-  const itemsPerPage = 5;
+  const itemsPerPage = 3;
 
-//   useEffect(() => {
-//     const endOffset = itemOffset + itemsPerPage;
+  useEffect(() => {
+    const endOffset = itemOffset + itemsPerPage;
 
-//     setCurrentItems(filteredProducts.slice(itemOffset, endOffset));
-//     setPageCount(Math.ceil(filteredProducts.length / itemsPerPage));
-//   }, [itemOffset, itemsPerPage, filteredProducts]);
+    setCurrentItems(filteredProducts.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(filteredProducts.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, filteredProducts]);
 
-//   const handlePageClick = (event) => {
-//     const newOffset = (event.selected * itemsPerPage) % filteredProducts.length;
-//     setItemOffset(newOffset);
-//   };
-  //   End Pagination
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % filteredProducts.length;
+    setItemOffset(newOffset);
+  };
+    // End Pagination
 
-//   useEffect(() => {
-//     dispatch(FILTER_PRODUCTS({ products, search }));
-//   }, [products, search, dispatch]);
-console.log("products", products);
+  useEffect(() => {
+    dispatch(FILTER_PRODUCTS({ products, search }));
+  }, [products, search, dispatch]);
+
   return (
     <div className="product-list">
       <hr />
@@ -108,7 +109,7 @@ console.log("products", products);
               </thead>
 
               <tbody>
-                {products.map((product, index) => {
+                {currentItems?.map((product, index) => {
                   const { _id, name, category, price, quantity } = product;
                   return (
                     <tr key={_id}>
@@ -153,7 +154,7 @@ console.log("products", products);
         <ReactPaginate
           breakLabel="..."
           nextLabel="Next"
-        //   onPageChange={handlePageClick}
+          onPageChange={handlePageClick}
           pageRangeDisplayed={3}
           pageCount={pageCount}
           previousLabel="Prev"
