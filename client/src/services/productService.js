@@ -16,6 +16,10 @@ const getProduct = async (id) => {
       const response = await axios.get(`${BASE_URL}/api/products/${id}`)
       return response.data;  
   }
+const updateProduct = async (id,formData) => {
+      const response = await axios.patch(`${BASE_URL}/api/products/${id}`,formData)
+      return response.data;  
+  }
 const deleteProduct = async (id) => {
       const response = await axios.delete(`${BASE_URL}/api/products/${id}`)
       return response.data;  
@@ -25,6 +29,7 @@ const deleteProduct = async (id) => {
     createProduct,
     getProducts,
     getProduct,
+    updateProduct,
     deleteProduct
   }
 

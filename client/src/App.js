@@ -20,10 +20,10 @@ import ProductDetail from './components/Product/ProductDetails/ProductDetails'
 axios.defaults.withCredentials = true
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    async function loginStatus(){
+    async function loginStatus() {
       const status = await userStatus()
       dispatch(SET_LOGIN(status))
     }
@@ -58,7 +58,7 @@ function App() {
             </Sidebar>
           }
         />
-             <Route
+        <Route
           path="/product-detail/:id"
           element={
             <Sidebar>
@@ -68,6 +68,46 @@ function App() {
             </Sidebar>
           }
         />
+        <Route
+          path="/edit-product/:id"
+          element={
+            <Sidebar>
+              <Layout>
+                {/* <EditProduct /> */}
+              </Layout>
+            </Sidebar>
+          }
+        />
+        {/* <Route
+          path="/profile"
+          element={
+            <Sidebar>
+              <Layout>
+                <Profile />
+              </Layout>
+            </Sidebar>
+          }
+        /> */}
+        {/* <Route
+          path="/edit-profile"
+          element={
+            <Sidebar>
+              <Layout>
+                <EditProfile />
+              </Layout>
+            </Sidebar>
+          }
+        /> */}
+        {/* <Route
+          path="/contact-us"
+          element={
+            <Sidebar>
+              <Layout>
+                <Contact />
+              </Layout>
+            </Sidebar>
+          }
+        /> */}
       </Routes>
       <ToastContainer />
     </>
