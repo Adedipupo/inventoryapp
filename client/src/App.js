@@ -15,6 +15,7 @@ import { useEffect } from 'react'
 import { userStatus } from './services/authService'
 import { SET_LOGIN } from './redux/features/auth/authSlice'
 import AddProduct from './pages/AddProduct/addProduct'
+import ProductDetail from './components/Product/ProductDetails/ProductDetails'
 
 axios.defaults.withCredentials = true
 
@@ -53,6 +54,16 @@ function App() {
             <Sidebar>
               <Layout>
                 <AddProduct />
+              </Layout>
+            </Sidebar>
+          }
+        />
+             <Route
+          path="/product-detail/:id"
+          element={
+            <Sidebar>
+              <Layout>
+                <ProductDetail />
               </Layout>
             </Sidebar>
           }

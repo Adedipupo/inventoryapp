@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import "./productDetails.scss";
+import DOMPurify from "dompurify";
 import useRedirectLoggedOutUser from "../../../customHook/useRedirectLoggedOutUser";
 import { selectIsLoggedIn } from "../../../redux/features/auth/authSlice";
 import { getProduct } from "../../../redux/features/product/productSlice";
-import Card from "../../card/Card";
-import { SpinnerImg } from "../../loader/Loader";
-import "./ProductDetail.scss";
-import DOMPurify from "dompurify";
+import { SpinnerImg } from "../../Loader/Loader";
+import Card from "../../Card/Card";
 
 const ProductDetail = () => {
   useRedirectLoggedOutUser("/login");
@@ -30,6 +30,7 @@ const ProductDetail = () => {
   useEffect(() => {
     if (isLoggedIn === true) {
       dispatch(getProduct(id));
+      console.log("id",product?.data );
     }
 
     if (isError) {
@@ -40,6 +41,7 @@ const ProductDetail = () => {
   return (
     <div className="product-detail">
       <h3 className="--mt">Product Detail</h3>
+      {id}
       <Card cardClass="card">
         {isLoading && <SpinnerImg />}
         {product && (
@@ -79,16 +81,16 @@ const ProductDetail = () => {
             <hr />
             <div
               dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(product.description),
+                __html: DOMPurify.sanitize(product?.description),
               }}
             ></div>
             <hr />
             <code className="--color-dark">
-              Created on: {product.createdAt.toLocaleString("en-US")}
+              Created on: {product?.createdAt.toLocaleString("en-US")}
             </code>
             <br />
             <code className="--color-dark">
-              Last Updated: {product.updatedAt.toLocaleString("en-US")}
+              Last Updated: {product?.updatedAt.toLocaleString("en-US")}
             </code>
           </div>
         )}
