@@ -8,7 +8,7 @@ import ReactPaginate from "react-paginate";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { Link } from "react-router-dom";
-import { getProducts } from "../../../redux/features/product/productSlice";
+import { deleteProduct, getProducts } from "../../../redux/features/product/productSlice";
 import { SpinnerImg } from "../../Loader/Loader";
 import Search from "../../Search/Search";
 import { FILTER_PRODUCTS, selectFilteredProducts } from "../../../redux/features/product/filterSlice";
@@ -28,8 +28,7 @@ const ProductList = ({ products, isLoading }) => {
   };
 
   const delProduct = async (id) => {
-    console.log(id);
-    // await dispatch(deleteProduct(id));
+    await dispatch(deleteProduct(id));
     await dispatch(getProducts());
   };
 
@@ -44,7 +43,7 @@ const ProductList = ({ products, isLoading }) => {
         },
         {
           label: "Cancel",
-          // onClick: () => alert('Click No')
+          onClick: () => alert('Click No')
         },
       ],
     });
