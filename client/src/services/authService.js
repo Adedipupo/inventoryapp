@@ -76,3 +76,21 @@ export const userStatus = async () => {
         toast.error(message)
       }
 }
+export const userDetails = async () => {
+    try {
+        const response = await axios.get(`${BASE_URL}/api/users/me`)
+        return response.data
+      } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+        toast.error(message)
+      }
+}
+export const updateUser = async () => {
+    try {
+        const response = await axios.put(`${BASE_URL}/api/users/update`)
+        return response.data
+      } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+        toast.error(message)
+      }
+}

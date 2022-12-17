@@ -14,8 +14,11 @@ import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { userStatus } from './services/authService'
 import { SET_LOGIN } from './redux/features/auth/authSlice'
-import AddProduct from './pages/AddProduct/addProduct'
+import AddProduct from './pages/AddProduct/AddProduct'
 import ProductDetail from './components/Product/ProductDetails/ProductDetails'
+import EditProduct from './pages/EditProduct/EditProduct'
+import Profile from './pages/profile/Profile'
+import EditProfile from './pages/profile/EditProfile'
 
 axios.defaults.withCredentials = true
 
@@ -73,12 +76,12 @@ function App() {
           element={
             <Sidebar>
               <Layout>
-                {/* <EditProduct /> */}
+                <EditProduct />
               </Layout>
             </Sidebar>
           }
         />
-        {/* <Route
+        <Route
           path="/profile"
           element={
             <Sidebar>
@@ -87,8 +90,8 @@ function App() {
               </Layout>
             </Sidebar>
           }
-        /> */}
-        {/* <Route
+        />
+        <Route
           path="/edit-profile"
           element={
             <Sidebar>
@@ -97,7 +100,7 @@ function App() {
               </Layout>
             </Sidebar>
           }
-        /> */}
+        />
         {/* <Route
           path="/contact-us"
           element={

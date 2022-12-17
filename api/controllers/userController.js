@@ -157,7 +157,7 @@ export const updateUser = asyncHandler(async (req, res) => {
   }
 
   if (user) {
-    user.email = email
+    user.email = user.email
     user.name = req.body.name || user.name
     user.photo = req.body.photo || user.photo
     user.phone = req.body.phone || user.phone
