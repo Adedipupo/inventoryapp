@@ -22,8 +22,8 @@ app.use(urlencoded({extended:false}))
 app.use(bodyParser.json())
 app.use(cookieParser())
 app.use(cors({
-  origin: "*",
-  credentials: true,
+  origin: "*"
+  // credentials: true,
 }));
 if (process.env.NODE_ENV === "development") {
   app.use(morgan('dev'))
