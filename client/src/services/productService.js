@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // export const BASE_URL = process.env.REACT_APP_BASE_URL
-const BASE_URL ="http://localhost:3344"
+const BASE_URL ="https://inventoryapp-production.up.railway.app/"
 
 
 const createProduct = async (formData) => {
