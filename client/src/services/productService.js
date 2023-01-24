@@ -17,11 +17,7 @@ const getProduct = async (id) => {
       return response.data;  
   }
 const updateProduct = async (id,formData) => {
-      const response = await axios.patch(`${BASE_URL}/api/products/${id}`,{
-        headers: {
-          "Content-Type": "application/json",
-        }
-      },formData)
+      const response = await axios.patch(`${BASE_URL}/api/products/${id}`,formData)
       return response.data;  
   }
 const deleteProduct = async (id) => {
