@@ -33,8 +33,8 @@ export const registerUser = asyncHandler(async (req, res) => {
     path: '/',
     httpOnly: true,
     expires: new Date(Date.now() + 1000 * 86400),
-    // sameSite: "none",
-    // secure: true,
+    sameSite: "none",
+    secure: true,
   })
 
   if (user) {
@@ -74,8 +74,8 @@ export const loginUser = asyncHandler(async (req, res) => {
     path: '/',
     httpOnly: true,
     expires: new Date(Date.now() + 1000 * 86400),
-    // sameSite: "none",
-    // secure: true,
+    sameSite: "none",
+    secure: true,
   })
 
   const passwordCorrect = await bcrypt.compare(password, user.password)

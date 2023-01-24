@@ -2,7 +2,8 @@ import axios from "axios";
 import {toast} from "react-toastify";
 
 // export const BASE_URL = process.env.REACT_APP_BASE_URL
-export const BASE_URL ="https://inventoryapp-production.up.railway.app"
+const BASE_URL ="https://inventoryapp-production.up.railway.app"
+// const BASE_URL ="http://localhost:3344"
 
 export const validateEmail = (email) => {
     return email.match(

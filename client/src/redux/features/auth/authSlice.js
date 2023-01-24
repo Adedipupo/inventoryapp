@@ -38,7 +38,6 @@ const authSlice = createSlice({
       state.user.photo = profile.photo;
 
     }
-
   }
 });
 
