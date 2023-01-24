@@ -22,7 +22,7 @@ app.use(urlencoded({extended:false}))
 app.use(bodyParser.json())
 app.use(cookieParser())
 app.use(cors({
-  origin: ["https://inventoryapp-jf7i.vercel.app","http://localhost:3000"],
+  origin: ["https://inventoryapp-jf7i.vercel.app","http://localhost:3000","https://invent-jb0qpaptr-adedipupo.vercel.app"],
   optionsSuccessStatus: 200,
   credentials: true,
 }));
