@@ -22,12 +22,16 @@ app.use(urlencoded({extended:false}))
 app.use(bodyParser.json())
 app.use(cookieParser())
 app.use(cors({
-  origin: "https://inventoryapp-jf7i.vercel.app/"
+  origin: "https://inventoryapp-jf7i.vercel.app/",
+  optionsSuccessStatus: 200 
+
   // credentials: true,
 }));
 if (process.env.NODE_ENV === "development") {
   app.use(morgan('dev'))
 }
+
+
 
 // const __dirname = path.resolve();
 const __dirname = dirname(fileURLToPath(import.meta.url));
