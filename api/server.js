@@ -22,10 +22,9 @@ app.use(urlencoded({extended:false}))
 app.use(bodyParser.json())
 app.use(cookieParser())
 app.use(cors({
-  origin: "https://inventoryapp-jf7i.vercel.app/",
-  optionsSuccessStatus: 200 
-
-  // credentials: true,
+  origin: "https://inventoryapp-jf7i.vercel.app",
+  optionsSuccessStatus: 200,
+  credentials: true,
 }));
 if (process.env.NODE_ENV === "development") {
   app.use(morgan('dev'))
