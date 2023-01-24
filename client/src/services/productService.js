@@ -5,23 +5,43 @@ const BASE_URL ="https://inventoryapp-production.up.railway.app"
 
 
 const createProduct = async (formData) => {
-      const response = await axios.post(`${BASE_URL}/api/products/create`, formData)
+      const response = await axios.post(`${BASE_URL}/api/products/create`,{
+        headers: {
+          "Content-Type": "application/json",
+        }
+      }, formData)
       return response.data;  
   }
 const getProducts = async () => {
-      const response = await axios.get(`${BASE_URL}/api/products`)
+      const response = await axios.get(`${BASE_URL}/api/products`,{
+        headers: {
+          "Content-Type": "application/json",
+        }
+      })
       return response.data;  
   }
 const getProduct = async (id) => {
-      const response = await axios.get(`${BASE_URL}/api/products/${id}`)
+      const response = await axios.get(`${BASE_URL}/api/products/${id}`,{
+        headers: {
+          "Content-Type": "application/json",
+        }
+      })
       return response.data;  
   }
 const updateProduct = async (id,formData) => {
-      const response = await axios.patch(`${BASE_URL}/api/products/${id}`,formData)
+      const response = await axios.patch(`${BASE_URL}/api/products/${id}`,{
+        headers: {
+          "Content-Type": "application/json",
+        }
+      },formData)
       return response.data;  
   }
 const deleteProduct = async (id) => {
-      const response = await axios.delete(`${BASE_URL}/api/products/${id}`)
+      const response = await axios.delete(`${BASE_URL}/api/products/${id}`,{
+        headers: {
+          "Content-Type": "application/json",
+        }
+      })
       return response.data;  
   }
 
