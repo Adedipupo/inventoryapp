@@ -12,11 +12,7 @@ export const validateEmail = (email) => {
 
 export const registerUser = async (userData) => {
   try {
-    const response = await axios.post(`${BASE_URL}/api/users/signup`, {
-      headers: {
-        "Content-Type": "application/json",
-      }
-    }, userData, {
+    const response = await axios.post(`${BASE_URL}/api/users/signup`, userData, {
         withCredentials: true 
     })
     if(response.statusText === "OK") {
@@ -30,11 +26,7 @@ export const registerUser = async (userData) => {
 }
 export const loginUser = async (userData) => {
   try {
-    const response = await axios.post(`${BASE_URL}/api/users/login`,{
-      headers: {
-        "Content-Type": "application/json",
-      }
-    }, userData, {
+    const response = await axios.post(`${BASE_URL}/api/users/login`, userData, {
         withCredentials: true 
     })
     if(response.statusText === "OK") {
@@ -48,11 +40,7 @@ export const loginUser = async (userData) => {
 }
 export const logoutUser = async () => {
   try {
-    await axios.post(`${BASE_URL}/api/users/logout`,{
-      headers: {
-        "Content-Type": "application/json",
-      }
-    }, {
+    await axios.post(`${BASE_URL}/api/users/logout`, {
         withCredentials: true 
     })
     toast.error("Logged out successfully!")
@@ -63,11 +51,7 @@ export const logoutUser = async () => {
 }
 export const forgotPassword = async (userData) => {
     try {
-      const response = await axios.post(`${BASE_URL}/api/users/forgotpassword`,{
-        headers: {
-          "Content-Type": "application/json",
-        }
-      }, userData)
+      const response = await axios.post(`${BASE_URL}/api/users/forgotpassword`, userData)
       toast.success(response.data.message)
     } catch (error) {
       const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -76,11 +60,7 @@ export const forgotPassword = async (userData) => {
   }
 export const resetPassword = async (userData,resetToken) => {
     try {
-      const response = await axios.put(`${BASE_URL}/api/users/resetpassword/${resetToken}`,{
-        headers: {
-          "Content-Type": "application/json",
-        }
-      }, userData)
+      const response = await axios.put(`${BASE_URL}/api/users/resetpassword/${resetToken}`,userData)
       return response.data
     } catch (error) {
       const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -89,11 +69,7 @@ export const resetPassword = async (userData,resetToken) => {
   }
 export const userStatus = async () => {
     try {
-        const response = await axios.get(`${BASE_URL}/api/users/status`,{
-          headers: {
-            "Content-Type": "application/json",
-          }
-        })
+        const response = await axios.get(`${BASE_URL}/api/users/status`)
         return response.data
       } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -102,11 +78,7 @@ export const userStatus = async () => {
 }
 export const userDetails = async () => {
     try {
-        const response = await axios.get(`${BASE_URL}/api/users/me`,{
-          headers: {
-            "Content-Type": "application/json",
-          }
-        })
+        const response = await axios.get(`${BASE_URL}/api/users/me`)
         return response.data
       } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -115,11 +87,7 @@ export const userDetails = async () => {
 }
 export const updateUser = async () => {
     try {
-        const response = await axios.put(`${BASE_URL}/api/users/update`,{
-          headers: {
-            "Content-Type": "application/json",
-          }
-        })
+        const response = await axios.put(`${BASE_URL}/api/users/update`)
         return response.data
       } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();

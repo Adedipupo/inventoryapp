@@ -5,27 +5,15 @@ const BASE_URL ="https://inventoryapp-production.up.railway.app"
 
 
 const createProduct = async (formData) => {
-      const response = await axios.post(`${BASE_URL}/api/products/create`,{
-        headers: {
-          "Content-Type": "application/json",
-        }
-      }, formData)
+      const response = await axios.post(`${BASE_URL}/api/products/create`, formData)
       return response.data;  
   }
 const getProducts = async () => {
-      const response = await axios.get(`${BASE_URL}/api/products`,{
-        headers: {
-          "Content-Type": "application/json",
-        }
-      })
+      const response = await axios.get(`${BASE_URL}/api/products`)
       return response.data;  
   }
 const getProduct = async (id) => {
-      const response = await axios.get(`${BASE_URL}/api/products/${id}`,{
-        headers: {
-          "Content-Type": "application/json",
-        }
-      })
+      const response = await axios.get(`${BASE_URL}/api/products/${id}`)
       return response.data;  
   }
 const updateProduct = async (id,formData) => {
@@ -37,11 +25,7 @@ const updateProduct = async (id,formData) => {
       return response.data;  
   }
 const deleteProduct = async (id) => {
-      const response = await axios.delete(`${BASE_URL}/api/products/${id}`,{
-        headers: {
-          "Content-Type": "application/json",
-        }
-      })
+      const response = await axios.delete(`${BASE_URL}/api/products/${id}`)
       return response.data;  
   }
 
