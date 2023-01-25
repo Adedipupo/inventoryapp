@@ -13,6 +13,7 @@ import path from 'path'
 import fs from 'fs'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
+import * as url from 'url'
 
 dotenv.config()
 
@@ -33,10 +34,15 @@ app.use(
     credentials: true,
   }),
 )
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 // create a write stream (in append mode)
-const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {
-  flags: 'a',
-})
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname, 'access.log'),
+  {
+    flags: 'a',
+  },
+)
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
@@ -45,7 +51,6 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // const __dirname = path.resolve();
-const __dirname = dirname(fileURLToPath(import.meta.url))
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 const PORT = process.env.PORT || 1234
