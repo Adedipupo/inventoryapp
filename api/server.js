@@ -34,7 +34,7 @@ app.use(
   }),
 )
 // create a write stream (in append mode)
-var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {
   flags: 'a',
 })
 
