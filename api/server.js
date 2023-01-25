@@ -10,6 +10,7 @@ import errorHandler from './middleware/errorMiddleware.js'
 import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
 import path from 'path'
+import fs from 'fs'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 
@@ -32,10 +33,15 @@ app.use(
     credentials: true,
   }),
 )
+// create a write stream (in append mode)
+var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {
+  flags: 'a',
+})
+
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 } else {
-  app.use(logger('combined'))
+  app.use(morgan('combined', { stream: accessLogStream }))
 }
 
 // const __dirname = path.resolve();
