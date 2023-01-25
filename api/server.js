@@ -44,10 +44,10 @@ const accessLogStream = fs.createWriteStream(
   },
 )
 
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'))
-} else {
+if (process.env.NODE_ENV === 'production') {
   app.use(morgan('combined', { stream: accessLogStream }))
+} else {
+  app.use(morgan('dev'))
 }
 
 // const __dirname = path.resolve();
