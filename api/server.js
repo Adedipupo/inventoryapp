@@ -41,6 +41,9 @@ const PORT = process.env.PORT || 1234
 app.get('/',(req, res)=>{
   res.send("api is live...")
 });
+app.get('/health',(req, res)=>{
+  res.send("api is live and fine oooo...")
+});
 app.use('/api/users',userRoutes);
 app.use('/api/products',productRoutes);
 app.use('/api/contact',contactRoutes);
