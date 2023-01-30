@@ -14,6 +14,7 @@ import fs from 'fs'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import * as url from 'url'
+import jobs from './utils/jobs.js'
 
 dotenv.config()
 
@@ -65,6 +66,8 @@ app.use('/api/users', userRoutes)
 app.use('/api/products', productRoutes)
 app.use('/api/contact', contactRoutes)
 app.use(errorHandler)
+
+
 
 mongoose
   .connect(process.env.MONGODB_URI)
