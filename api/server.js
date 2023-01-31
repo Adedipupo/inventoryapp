@@ -14,8 +14,10 @@ import fs from 'fs'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import * as url from 'url'
-import schedule from "node-schedule";
+import schedule from 'node-schedule'
 import { UserModel } from './models/userModel.js'
+import { ProductModel } from './models/productModel.js'
+import { sendEmail } from './utils/sendEmail.js'
 
 dotenv.config()
 
@@ -68,20 +70,32 @@ app.use('/api/products', productRoutes)
 app.use('/api/contact', contactRoutes)
 app.use(errorHandler)
 
+const j = schedule.scheduleJob('42 * * * *', async function () {
+  try {
+    console.log('Running Cron Job')
+    const users = await UserModel.find({})
+    console.log('users: ' + typeof users)
+    const products = await ProductModel.find({})
 
-const j = schedule.scheduleJob("16 * * * *", async function() {
+    users.map((user) => {
+      const message = `
+     <p>These are the currents product available in our database,we'll update them every 4hours for latest update</p>
 
-  console.log("Running Cron Job");
-  const users = await UserModel.find({});
-  console.log("users: " + users);
-  // // Get the list of users from the MongoDB database
-  // usersCollection.find({}).toArray((err, users) => {
-  //   // Loop through the users and send them an email
-  //   users.forEach(user => {
-  //     sendEmail(user.email, "Daily Update", "Here is your daily update");
-  //   });
-  // });
-});
+      <ul>
+      ${products.map((product) => {
+        return `<li>${product.name}</li>`
+      })}
+    `
+
+      const subject = 'Products Notification Alert'
+      const send_to = user?.email
+      const send_from = process.env.EMAIL_USER
+      sendEmail(subject, message, send_to, send_from)
+    })
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 mongoose
   .connect(process.env.MONGODB_URI)
@@ -94,4 +108,4 @@ mongoose
   })
   .catch((err) => console.log(err))
 
-export default app;
+export default app
