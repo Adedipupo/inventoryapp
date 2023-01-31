@@ -70,31 +70,31 @@ app.use('/api/products', productRoutes)
 app.use('/api/contact', contactRoutes)
 app.use(errorHandler)
 
-const j = schedule.scheduleJob('0 */6 * * *', async function () {
-  try {
-    console.log('Running-Jobs')
-    const users = await UserModel.find({})
-    const products = await ProductModel.find({})
+// const j = schedule.scheduleJob('0 */6 * * *', async function () {
+//   try {
+//     console.log('Running-Jobs')
+//     const users = await UserModel.find({})
+//     const products = await ProductModel.find({})
 
-    users.map((user) => {
-      const message = `
-     <p>These are the currents product available in our database,we'll update them every 4hours for latest update</p>
+//     users.map((user) => {
+//       const message = `
+//      <p>These are the currents product available in our database,we'll update them every 4hours for latest update</p>
 
-      <ul>
-      ${products.map((product) => {
-        return `<li>${product.name}</li>`
-      })}
-    `
+//       <ul>
+//       ${products.map((product) => {
+//         return `<li>${product.name}</li>`
+//       })}
+//     `
 
-      const subject = 'Products Notification Alert'
-      const send_to = user?.email
-      const send_from = process.env.EMAIL_USER
-      sendEmail(subject, message, send_to, send_from)
-    })
-  } catch (error) {
-    console.log(error)
-  }
-})
+//       const subject = 'Products Notification Alert'
+//       const send_to = user?.email
+//       const send_from = process.env.EMAIL_USER
+//       sendEmail(subject, message, send_to, send_from)
+//     })
+//   } catch (error) {
+//     console.log(error)
+//   }
+// })
 
 mongoose
   .connect(process.env.MONGODB_URI)
