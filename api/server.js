@@ -70,11 +70,10 @@ app.use('/api/products', productRoutes)
 app.use('/api/contact', contactRoutes)
 app.use(errorHandler)
 
-const j = schedule.scheduleJob('42 * * * *', async function () {
+const j = schedule.scheduleJob('0 */6 * * *', async function () {
   try {
-    console.log('Running Cron Job')
+    console.log('Running-Jobs')
     const users = await UserModel.find({})
-    console.log('users: ' + typeof users)
     const products = await ProductModel.find({})
 
     users.map((user) => {

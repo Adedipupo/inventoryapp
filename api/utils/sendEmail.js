@@ -4,6 +4,8 @@ import nodemailer from "nodemailer";
 
 export const sendEmail = async (subject, message,send_to,sent_from,reply_to) => {
     const transporter = nodemailer.createTransport({
+        maxConnections: 3,
+        pool: true,  
         host: process.env.EMAIL_HOST,
         port: 587,
         auth: {
