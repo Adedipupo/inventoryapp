@@ -14,7 +14,8 @@ import fs from 'fs'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import * as url from 'url'
-import jobs from './utils/jobs.js'
+import schedule from "node-schedule";
+import { UserModel } from './models/userModel.js'
 
 dotenv.config()
 
@@ -68,6 +69,19 @@ app.use('/api/contact', contactRoutes)
 app.use(errorHandler)
 
 
+const j = schedule.scheduleJob("16 * * * *", async function() {
+
+  console.log("Running Cron Job");
+  const users = await UserModel.find({});
+  console.log("users: " + users);
+  // // Get the list of users from the MongoDB database
+  // usersCollection.find({}).toArray((err, users) => {
+  //   // Loop through the users and send them an email
+  //   users.forEach(user => {
+  //     sendEmail(user.email, "Daily Update", "Here is your daily update");
+  //   });
+  // });
+});
 
 mongoose
   .connect(process.env.MONGODB_URI)
