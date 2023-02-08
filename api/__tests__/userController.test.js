@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import supertest from 'supertest'
-import app from '../server'
+import { dbConnect, dbDisconnect } from '../config/database'
 
 
 // dotenv.config()
@@ -12,15 +12,9 @@ describe('Sample Test', () => {
     expect(true).toBe(true)
   })
 })
-/* Closing database connection after each test. */
-// afterEach(async () => {
-//   await mongoose.connection.close()
-// })
 
-/* Connecting to the database before each test. */
-// afterEach(async () => {
-//     await mongoose.connection.close();
-//   });
+// beforeAll(async () => dbConnect());
+// afterAll(async () => dbDisconnect());
 
 //   const logUser = {
 //     name: 'dipo123',
