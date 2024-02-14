@@ -6,14 +6,8 @@ const mongoServer = new MongoMemoryServer();
 export const dbConnect = async () => {
   const uri = await mongoServer.getUri();
 
-  const mongooseOpts = {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-  };
 
-  await mongoose.connect(uri, mongooseOpts);
+  await mongoose.connect(uri);
 };
 
 export const dbDisconnect = async () => {
