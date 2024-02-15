@@ -3,7 +3,9 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 
 const mongoServer = new MongoMemoryServer();
 
+
 export const dbConnect = async () => {
+  mongoose.set("strictQuery", false);
   const uri = await mongoServer.getUri();
 
 
